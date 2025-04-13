@@ -25,6 +25,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -147,6 +148,14 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 	private final HashMap<Long, Integer> auto_resolution_map = new HashMap<Long, Integer>();
 	
 	private volatile boolean snapshot = false;
+
+	private volatile boolean snapshotAndEnhance = false;
+	private JMenuItem mntmSnapshotAndEnhance;
+	private JComboBox<String> modelTypeSelector;
+	private JButton loadModelButton;
+	private JFileChooser chooser;
+	private File modelFile;
+	private boolean modelLoaded = false;
 	private volatile boolean height_change_from_auto = false;
 	private volatile boolean plot_change_from_auto = false;
 	private volatile boolean spinner_change_from_auto = false;
@@ -250,7 +259,7 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 		line_plotter.setSelectedValue(height_initial);
 
 		btnStartStop = new JButton("Start");
-		btnStartStop.setBounds(581, 33, 209, 25);
+		btnStartStop.setBounds(585, 25, 203, 20);
 		btnStartStop.setEnabled(false);
 		btnStartStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -323,6 +332,34 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 			}
 		});
 		mnTweaks.add(mntmTakeSnapshot);
+
+		mntmSnapshotAndEnhance = new JMenuItem("Take snapshot and enhance");
+		mntmSnapshotAndEnhance.setEnabled(false);
+		mntmSnapshotAndEnhance.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				snapshotAndEnhance = true;
+			}
+		});
+		mnTweaks.add(mntmSnapshotAndEnhance);
+
+		modelTypeSelector = new JComboBox<>(new String[]{"DRUNet", "DnCNN"});
+		modelTypeSelector.setBounds(581, 50, 104, 22);
+		frmTempestSdr.getContentPane().add(modelTypeSelector);
+
+		loadModelButton = new JButton("Load model");
+		loadModelButton.setBounds(685, 49, 104, 22);
+		loadModelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				int returnVal = chooser.showOpenDialog(frmTempestSdr);
+				if(returnVal == JFileChooser.APPROVE_OPTION) {
+					modelFile = chooser.getSelectedFile();
+					modelLoaded = true;
+					mntmSnapshotAndEnhance.setEnabled(true);
+				}
+			}
+		});
+		frmTempestSdr.getContentPane().add(loadModelButton);
 		
 		chckbxmntmNewCheckItem = new JCheckBoxMenuItem("Inverted colours");
 		chckbxmntmNewCheckItem.addActionListener(new ActionListener() {
@@ -402,7 +439,7 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 		frmTempestSdr.getContentPane().add(btnReset);
 		
 		cbVideoModes = new JComboBox();
-		cbVideoModes.setBounds(581, 70, 209, 22);
+		cbVideoModes.setBounds(581, 75, 209, 22);
 		frmTempestSdr.getContentPane().add(cbVideoModes);
 		cbVideoModes.setModel(new DefaultComboBoxModel(videomodes));
 		if (closest_videomode_id != -1 && closest_videomode_id < videomodes.length && closest_videomode_id >= 0) cbVideoModes.setSelectedIndex(closest_videomode_id);

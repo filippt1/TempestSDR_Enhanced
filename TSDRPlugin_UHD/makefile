@@ -113,7 +113,7 @@ ifeq ($(OSNAME),LINUX)
 	LIBRARIES+=-lboost_thread -lboost_program_options -luhd
 else ifeq ($(OSNAME),MAC)
 	CXXFLAGS+=-fPIC
-	LIBRARIES+=-L/opt/homebrew/lib -lboost_thread-mt -lboost_program_options-mt -lboost_system-mt -luhd
+	LIBRARIES+=-L/opt/homebrew/lib -lboost_thread -lboost_program_options -lboost_system -luhd
 else ifeq ($(OSNAME),WINDOWS)
 	LDFLAGS+=-Wl,--add-stdcall-alias
 	LIBRARIES+= -lboost_thread-mt -lboost_program_options-mt -lboost_system-mt -luhd 
