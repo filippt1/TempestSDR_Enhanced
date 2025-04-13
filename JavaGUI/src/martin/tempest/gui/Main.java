@@ -150,6 +150,8 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 	private volatile boolean snapshot = false;
 
 	private volatile boolean snapshotAndEnhance = false;
+	private String selectedModelPath = null;
+	private String selectedModelType = null;
 	private JMenuItem mntmSnapshotAndEnhance;
 	private JComboBox<String> modelTypeSelector;
 	private JButton loadModelButton;
@@ -342,7 +344,16 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 		});
 		mnTweaks.add(mntmSnapshotAndEnhance);
 
-		modelTypeSelector = new JComboBox<>(new String[]{"DRUNet", "DnCNN"});
+		modelTypeSelector = new JComboBox<>(new String[]{"Select model","DRUNet", "DnCNN"});
+		modelTypeSelector.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String newSelection = (String) modelTypeSelector.getSelectedItem();
+				if (selectedModelPath != null && !newSelection.equals(selectedModelType)) {
+					mntmSnapshotAndEnhance.setEnabled(false);
+				}
+			}
+		});
 		modelTypeSelector.setBounds(581, 50, 104, 22);
 		frmTempestSdr.getContentPane().add(modelTypeSelector);
 
@@ -351,11 +362,14 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 		loadModelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
-				int returnVal = chooser.showOpenDialog(frmTempestSdr);
-				if(returnVal == JFileChooser.APPROVE_OPTION) {
-					modelFile = chooser.getSelectedFile();
-					modelLoaded = true;
-					mntmSnapshotAndEnhance.setEnabled(true);
+				if (chooser.showOpenDialog(frmTempestSdr) == JFileChooser.APPROVE_OPTION) {
+					selectedModelPath = chooser.getSelectedFile().getAbsolutePath();
+					selectedModelType = (String) modelTypeSelector.getSelectedItem();
+					if (!selectedModelType.equals("Select model")) {
+						mntmSnapshotAndEnhance.setEnabled(true);
+					} else {
+						JOptionPane.showMessageDialog(frmTempestSdr, "Please select a model type.", "Warning", JOptionPane.WARNING_MESSAGE);
+					}
 				}
 			}
 		});
@@ -1131,25 +1145,50 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 
 	@Override
 	public void onFrameReady(TSDRLibrary lib, BufferedImage frame) {
-		if (snapshot) {
-			snapshot = false;
-			try {
-				final BufferedImage resized_frame = resize(frame, image_width, frame.getHeight());
-				final int freq = (int) Math.abs(((Long) spFrequency.getValue())/1000000.0d);
-				final String filename = "TSDR_"+(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(new Date())+"_"+freq+"MHz"+"."+SNAPSHOT_FORMAT;
-				final File outputfile = new File(filename);
-				
-				
-				ImageIO.write(resized_frame, SNAPSHOT_FORMAT, outputfile);
-				visualizer.setOSD("Saved to "+outputfile.getAbsolutePath(), OSD_TIME);
-			} catch (Throwable e) {
-				visualizer.setOSD("Failed to capture snapshot", OSD_TIME);
-				e.printStackTrace();
-			}
-			
+		if (!snapshot && !snapshotAndEnhance) {
+			visualizer.drawImage(frame, image_width);
+			return;
 		}
-		visualizer.drawImage(frame, image_width);
-	
+
+		try {
+			BufferedImage resized_frame = resize(frame, image_width, frame.getHeight());
+			int freq = (int) Math.abs(((Long) spFrequency.getValue()) / 1000000.0d);
+			String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+			String filename = "TSDR_" + timestamp + "_" + freq + "MHz." + SNAPSHOT_FORMAT;
+			File outputfile = new File(filename);
+
+			if (snapshot) {
+				snapshot = false;
+				ImageIO.write(resized_frame, SNAPSHOT_FORMAT, outputfile);
+				visualizer.setOSD("Saved to " + outputfile.getAbsolutePath(), OSD_TIME);
+			} else if (snapshotAndEnhance) {
+				snapshotAndEnhance = false;
+				ImageIO.write(resized_frame, SNAPSHOT_FORMAT, outputfile);
+
+				String enhancedFileName = "ENH_" + timestamp + "_" + freq + "MHz." + SNAPSHOT_FORMAT;
+				File enhancedFile = new File(enhancedFileName);
+
+				ProcessBuilder pb = new ProcessBuilder(
+						"python3", "enhance_image.py",
+						outputfile.getAbsolutePath(),
+						enhancedFile.getAbsolutePath(),
+						selectedModelType,
+						selectedModelPath
+				);
+
+				Process process = pb.start();
+				int exitCode = process.waitFor();
+
+				if (exitCode == 0 && enhancedFile.exists()) {
+					visualizer.setOSD("Enhanced image saved: " + enhancedFile.getAbsolutePath(), OSD_TIME);
+				} else {
+					visualizer.setOSD("Enhancement failed", OSD_TIME);
+				}
+			}
+		} catch (Throwable e) {
+			visualizer.setOSD("Failed to capture snapshot", OSD_TIME);
+			e.printStackTrace();
+		}
 	}
 
 	@Override
