@@ -18,6 +18,9 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -1168,16 +1171,25 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 				String enhancedFileName = "ENH_" + timestamp + "_" + freq + "MHz." + SNAPSHOT_FORMAT;
 				File enhancedFile = new File(enhancedFileName);
 
+				VideoMode selectedMode = (VideoMode) cbVideoModes.getSelectedItem();
 				ProcessBuilder pb = new ProcessBuilder(
 						"python3", "enhance_image.py",
 						outputfile.getAbsolutePath(),
 						enhancedFile.getAbsolutePath(),
 						selectedModelType,
-						selectedModelPath
+						selectedModelPath,
+						selectedMode.toString()
 				);
 
+				pb.redirectErrorStream(true);
 				Process process = pb.start();
 				int exitCode = process.waitFor();
+
+				BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					System.out.println("Python output: " + line);
+				}
 
 				if (exitCode == 0 && enhancedFile.exists()) {
 					visualizer.setOSD("Enhanced image saved: " + enhancedFile.getAbsolutePath(), OSD_TIME);
