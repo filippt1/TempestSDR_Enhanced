@@ -20,6 +20,8 @@ import java.awt.Toolkit;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.IOException;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.JDialog;
@@ -1185,13 +1187,19 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 				//pb.redirectErrorStream(true);
 
 				Process process = pb.start();
-				int exitCode = process.waitFor();
 
-				BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-				String line;
-				while ((line = reader.readLine()) != null) {
-					System.out.println("Python output: " + line);
-				}
+                new Thread(() -> {
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println("Python output: " + line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+
+                int exitCode = process.waitFor();
 
 				if (exitCode == 0 && enhancedFile.exists()) {
 					visualizer.setOSD("Enhanced image saved: " + enhancedFile.getAbsolutePath(), OSD_TIME);

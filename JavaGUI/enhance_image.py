@@ -3,6 +3,7 @@ import sys
 import cv2
 import numpy as np
 import torch
+from datetime import datetime
 from utils import utils_image as util
 
 def perform_inference(model, device, model_type, input_path, output_path, width, height):
@@ -20,14 +21,14 @@ def perform_inference(model, device, model_type, input_path, output_path, width,
         img_L = util.single2tensor4(img_L).to(device)
 
     else:
-        sys.exit(f"I do not know this model type {model_type}. Please use DRUNet or DnCNN.")
+        sys.exit(f"[ERROR] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} I do not know this model type {model_type}. Please use DRUNet or DnCNN.")
 
     with torch.no_grad():
         img_E = model(img_L)
     img_E = util.tensor2uint(img_E)
 
     util.imsave(img_E, output_path)
-    print("[INFO] Inference complete.")
+    print(f"[INFO] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Inference complete.")
     sys.exit(0)
 
 
@@ -40,7 +41,7 @@ def load_model(model_type, model_path):
             from models.network_dncnn import DnCNN as net
             model = net(in_nc=1, out_nc=1, nc=64, nb=17, act_mode="BR")
         else:
-            sys.exit(f"I do not know this model type {model_type}. Please use DRUNet or DnCNN.")
+            sys.exit(f"[ERROR] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} I do not know this model type {model_type}. Please use DRUNet or DnCNN.")
 
         device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.mps.is_available() else "cpu")
         model.load_state_dict(torch.load(model_path), strict=True)
@@ -49,9 +50,10 @@ def load_model(model_type, model_path):
             v.requires_grad = False
         model = model.to(device)
 
+        print(f"[INFO] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Model {model_type} loaded from {model_path}.")
         return model, device
     except Exception as e:
-        print(f"[ERROR] Loading model failed due to {e}.")
+        print(f"[ERROR] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Loading model failed due to {e}.")
         sys.exit(1)
 
 
@@ -81,14 +83,14 @@ def extract_exact_patch(img, target_width, target_height):
 
         return cropped
     except Exception as e:
-        print(f"[WARNING] Cropping contour logic failed due to: {e}")
+        print(f"[WARNING] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Cropping contour logic failed due to: {e}")
         h, w = img.shape[:2]
         x_center = w // 2
         y_center = h // 2
         x_crop = x_center - target_width // 2
         y_crop = y_center - target_height // 2
         cropped = img[y_crop:y_crop + target_height, x_crop:x_crop + target_width]
-        print("[INFO] Fallback: Cropped from center.")
+        print(f"[INFO] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Fallback: Cropped from center.")
         return cropped
 
 
@@ -96,7 +98,7 @@ def extract_exact_patch(img, target_width, target_height):
 
 def main():
     if len(sys.argv) != 6:
-        print("[ERROR] Usage: python enhance_image.py input_path output_path model_type model_path target_resolution")
+        print(f"[ERROR] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Usage: python enhance_image.py input_path output_path model_type model_path target_resolution")
         sys.exit(1)
 
     input_path = sys.argv[1]
@@ -105,21 +107,20 @@ def main():
     model_path = sys.argv[4]
     target_resolution = sys.argv[5]
 
-    print("[INFO] Input path: " + input_path)
-    print("[INFO] Outputh path: " + output_path)
-    print("[INFO] Model type: " + model_type)
-    print("[INFO] Model path: " + model_path)
-    print("[INFO] Target resolution: " + target_resolution)
+    print(f"[INFO] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Input path: " + input_path)
+    print(f"[INFO] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Outputh path: " + output_path)
+    print(f"[INFO] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Model type: " + model_type)
+    print(f"[INFO] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Model path: " + model_path)
+    print(f"[INFO] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Target resolution: " + target_resolution)
 
     resolution_only = target_resolution.split("@")[0].strip()
     width_str, height_str = resolution_only.split("x")
     width = int(width_str)
     height = int(height_str)
 
-    print(f"[INFO] Parsed resolution: width = {width}, height = {height}")
+    print(f"[INFO] {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')} Parsed resolution: width = {width}, height = {height}")
 
     model, device = load_model(model_type, model_path)
-    print(f"[INFO] Model {model_type} loaded from {model_path}.")
 
     perform_inference(model, device, model_type, input_path, output_path, width, height)
 
