@@ -1181,7 +1181,9 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 						selectedMode.toString()
 				);
 
-				pb.redirectErrorStream(true);
+                // enable for easier debugging
+				//pb.redirectErrorStream(true);
+
 				Process process = pb.start();
 				int exitCode = process.waitFor();
 
