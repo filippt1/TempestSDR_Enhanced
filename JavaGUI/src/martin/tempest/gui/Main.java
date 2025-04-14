@@ -1185,19 +1185,14 @@ public class Main implements TSDRLibrary.FrameReadyCallback, TSDRLibrary.Incomin
 
                 // enable for easier debugging
 				//pb.redirectErrorStream(true);
-
+                pb.environment().put("PYTHONBUFFERED", "1");
 				Process process = pb.start();
 
-                new Thread(() -> {
-                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            System.out.println("Python output: " + line);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }).start();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println("Python output: " + line);
+                }
 
                 int exitCode = process.waitFor();
 
