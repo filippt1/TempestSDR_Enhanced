@@ -1,0 +1,45 @@
+https://www.changpuak.ch/electronics/yagi_uda_antenna.php
+Javascript Version 12.01.2014, based on Rothammel / DL6WU
+-------------------------------------------------------------
+Frequency     :  130  MHz, (useful from 127.39999999999999 to 132.6)
+Wavelength    :  2308  mm
+Rod Diameter  :  8  mm
+Boom Diameter :  20  mm
+Boom Length   :  1654  mm
+d/lambda      :  0.003    ( min.: 0.002 , max.: 0.01 )
+D/lambda      :  0.010    ( min.: 0.01 , max.: 0.05 )
+Elements      :  5
+Gain          :  7.99 dBd (approx.)
+-------------------------------------------------------------
+Reflector Length   : 1120 mm
+Reflector Position :  0 mm
+-------------------------------------------------------------
+Dipole Position    : 554 mm
+-------------------------------------------------------------
+Director #1 Position : 727 mm ,  Length : 1057 mm
+Distance Dipole - Dir. #1 : 173 mm 
+-------------------------------------------------------------
+Director #2 Position : 1142 mm ,  Length : 1047 mm
+Distance Dir. #1 - Dir. #2 : 415 mm 
+-------------------------------------------------------------
+Director #3 Position : 1638 mm ,  Length : 1038 mm
+Distance Dir. #2 - Dir. #3 : 496 mm 
+-------------------------------------------------------------
+Directors / Parasitics are not isolated.
+The length has been increased to compensate for that.
+
+
+FOLDED DIPOLE
+https://3g-aerial.biz/en/online-calculations/antenna-calculations/dipole-online-calculator
+Dipole top/bottom spacing: H = 40 mm
+-------------------------------------------------------------
+Wavelength λ: 2 m 306 mm
+-------------------------------------------------------------
+The length of the folded dipole: F2 = 1 m 63 mm
+Distance: W = 1 m 7 mm
+Approximate gap at connection point g <= 30.7 mm
+Shortening factor: Kf = 0.92
+Shortening factor with respect to a straight dipole: Kf/Kl = 0.99
+
+
+

@@ -1,0 +1,48 @@
+TempestSDR:
+	Final Averages:
+		Avg MSE: 110.7379
+		Avg PSNR: 8.65
+		Avg SSIM: 0.4155
+		Avg CER: 0.8589
+		
+DRUNet 180 epoch:
+	Final Averages:
+		Avg MSE: 33.0715
+		Avg PSNR: 18.72
+		Avg SSIM: 0.8762
+		Avg CER: 0.4939
+		
+DRUNet 100 epoch:
+	Final Averages:
+		Avg MSE: 39.2786
+		Avg PSNR: 18.45
+		Avg SSIM: 0.8636
+		Avg CER: 0.4801
+		
+DRUNet 70 epoch:
+	Final Averages:
+		Avg MSE: 37.5745
+		Avg PSNR: 19.08
+		Avg SSIM: 0.8746
+		Avg CER: 0.4679
+		
+DnCNN 110 epoch:
+	Final Averages:
+		Avg MSE: 56.6786
+		Avg PSNR: 17.71
+		Avg SSIM: 0.7490
+		Avg CER: 0.5330
+		
+DnCNN 70 epoch:
+	Final Averages:
+		Avg MSE: 50.1645
+		Avg PSNR: 17.63
+		Avg SSIM: 0.7518
+		Avg CER: 0.5407
+		
+DnCNN 50 epoch:
+	Final Averages:
+		Avg MSE: 54.6272
+		Avg PSNR: 17.52
+		Avg SSIM: 0.7349
+		Avg CER: 0.5322

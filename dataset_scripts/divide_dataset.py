@@ -2,6 +2,8 @@ import os
 import shutil
 import random
 
+# Script that randomly divides the dataset with 80:10:10 ratio with desired dataset structure.
+
 dataset_path = ""
 output_dir = ""
 train_dir = os.path.join(output_dir, "train")
@@ -22,6 +24,7 @@ val_images = images[train_count:train_count + val_count]
 test_images = images[train_count + val_count:]
 
 
+# Helper function for copying the images.
 def copy_data(image_list, dest_dir):
     for img in image_list:
         img_path = os.path.join(dataset_path, img)

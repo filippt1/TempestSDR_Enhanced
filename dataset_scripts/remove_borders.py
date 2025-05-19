@@ -2,12 +2,17 @@ import cv2
 import numpy as np
 import os
 
+# Script that removes the padding in captured images.
+
+# Define the folders.
 CAPTURED_FOLDER = ""
 REFERENCE_FOLDER = ""
 OUTPUT_FOLDER = ""
 
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
+# Main function which finds the image without padding using template matching from OpenCV library.
+# In case there does not exist a sufficient match, it skips the image.
 def align_and_crop(captured_path, reference_path):
     captured = cv2.imread(captured_path)
     reference = cv2.imread(reference_path)
