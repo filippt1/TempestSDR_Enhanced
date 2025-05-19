@@ -1,3 +1,8 @@
+# Integrácia natrénovaných modelov do TempestSDR
+Tento podadresár obsahuje zdrojový kód k upravenému TempestSDR. Na rozdiel od pôvodného TempestSDR, v [Main.java](JavaGUI/src/martin/tempest/gui) sú pridané tlačidlá, ktoré umožňujú výber natrénovaného modelu a spustenie skriptu [enhance_image.py](TempestSDR_Enhanced/JavaGUI/enhance_image.py). Skript vykoná inferenciu nad zachyteným obrázkom a uloží ju (spolu s pôvodným obrázkom).
+
+Návod k spusteniu TempestSDR sa nachádza nižšie.
+
 TempestSDR
 =============
 
@@ -8,15 +13,6 @@ Raster video is usually transmitted one line of pixels at a time, encoded as a v
 The toolkit uses unmodified off-the-shelf hardware which lowers the costs and increases mobility compared to existing solutions. It allows for additional post-processing which improves the signal-to-noise ratio. The attacker does not need to have prior knowledge about the target video display. All parameters such as resolution and refresh rate are estimated with the aid of the software. 
 
 The software consists of a library written in C, a collection of plug-ins for various Software Define Radio (SDR) front-ends and a Java based Graphical User Interface (GUI). It is a multi-platform application, with all native libraries pre-compiled and packed into a single Java jar file.
-
-Release
-------------
-
- * [JTempestSDR.jar](https://raw.github.com/martinmarinov/TempestSDR/master/Release/JavaGUI/JTempestSDR.jar) is the self contained multi platform GUI executable. It should work with just a double click on most Windows/Ubuntu x86/x64 based machines.
- * [Download dlls] (https://github.com/martinmarinov/TempestSDR/tree/master/Release/dlls) contains the precompiled dll files for Linux/Windows x86/x64 which you can use in your own project under the GNU GPL license.
-
-Double click on the JTempestSDR.jar file to launch. If it fails to launch, you will need to recompile the project.
-
 
 Building the executable
 ------------
@@ -75,6 +71,8 @@ to
 
 On Linux and OS X, compiling the GUI will also compile the UHD driver, so you will need to have UHD and the corresponding boost libraries installed (UHD will install them automatically). If you don't want the UHD drivers, then you can skip their compilation by removing the line 91 for Linux and line 93 for OS X from the Makefile in the JavaGUI directory.
 
+## Usage
+Double click on the [JTempestSDR.jar](TempestSDR_Enhanced/JavaGUI/JTempestSDR.jar) file to launch. If it fails to launch, you will need to recompile the project.
 
 Building the libraries
 ------------
