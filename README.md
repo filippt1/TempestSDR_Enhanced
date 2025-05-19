@@ -5,7 +5,7 @@ V tomto repozitári sa nachádzajú použité skripty, ukážky datasetu a uprav
 Repozitár obsahuje:
 - [zdrojový kód upraveného TempestSDR](TempestSDR_Enhanced/)
 - [zdojové kódy použitých skriptov pri tvorbe datasetu](dataset_scripts/)
-- [záznamy z trénovania a zdrojové kódy vyhodnocujúcich skriptov](deep_learning/)
+- [záznamy z trénovania, zdrojové kódy vyhodnocujúcich skriptov a dataloader](deep_learning/)
 - [ukážku z datasetu](dataset_sample/)
 - [ukážku inferencie s natrénovanými modelmi](inference_sample/)
 - [rozmery vytorenej antény a dipólov](antena/)
