@@ -1,5 +1,5 @@
-# Ukážka inferencie
+# Inference Sample
 
-Tento podadresár obsahuje ukážku inferencie pomocou natrénovaných modelov.
+This subdirectory contains a sample inference using the trained models.
 
-Jeho štruktúra pozostáva z referenčných snímok, pričom každá má svoj vlastný podadresár. V jednotlivých podadresároch sa nachádzajú snímky zachytené v TempestSDR a tiež snímky rekonštruované použitím DRUNet, resp. DnCNN. 
+Its structure consists of reference images, each having its own subdirectory. Inside each subdirectory are the images captured in TempestSDR, as well as the reconstructed images using DRUNet and DnCNN, respectively.
