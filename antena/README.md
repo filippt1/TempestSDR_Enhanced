@@ -1,2 +1,2 @@
-# Rozmery antény
-Tento podadresár obsahuje rozmery, ktoré sme použili pri tvorbe [antény a ohnutého dipólu](antena+folded.txt) a [rovného dipólu](straightdipole.png). Obsahuje tiež [fotku](vytvorena_antena.jpg) vytvorenej antény.
+# Antenna Dimensions
+This subdirectory contains the dimensions used for creating the [antenna and folded dipole](antena+folded.txt) and the [straight dipole](straightdipole.png). It also includes a [photo](vytvorena_antena.jpg) of the constructed antenna.
