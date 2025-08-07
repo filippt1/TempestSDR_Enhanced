@@ -1,3 +1,3 @@
-# Hlboké učenie
+# Deep Learning
 
-Tento podadresár obsahuje [záznamy a výsledky](training_logs/) (logy) z tréningu modelov DRUNet a DnCNN. Ďalej obsahuje [dataloader](scripts/data/dataset_tempestLH.py) a skripty, ktoré boli použité pri [inferencii](scripts/inference.py), [tvorbe grafov](scripts/generate_graphs.py) a [vyhodnocovaní vybraných metrík](scripts/evaluate.py).
+This subdirectory contains [logs and results](training_logs/) from training the DRUNet and DnCNN models. It also includes the [dataloader](scripts/data/dataset_tempestLH.py) and scripts used for [inference](scripts/inference.py), [graph generation](scripts/generate_graphs.py), and [evaluation of selected metrics](scripts/evaluate.py).
