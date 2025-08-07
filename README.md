@@ -1,4 +1,4 @@
-# Online resources to “Reconstruction of Images Captured by TempestSDR”
+# Online resources to “Reconstruction of Image Captured by TempestSDR”
 This repository contains the used scripts, dataset samples, and the modified TempestSDR.
 
 ## Repository Structure
