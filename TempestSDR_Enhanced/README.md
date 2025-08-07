@@ -1,7 +1,7 @@
-# Integrácia natrénovaných modelov do TempestSDR
-Tento podadresár obsahuje zdrojový kód k upravenému TempestSDR. Na rozdiel od pôvodného TempestSDR, v [Main.java](JavaGUI/src/martin/tempest/gui/Main.java) sú pridané tlačidlá, ktoré umožňujú výber natrénovaného modelu a spustenie skriptu [enhance_image.py](JavaGUI/enhance_image.py). Skript vykoná inferenciu nad zachyteným obrázkom a uloží ju (spolu s pôvodným obrázkom).
+# Integration of trained models into TempestSDR
+This subdirectory contains the source code for the modified TempestSDR. Unlike the original TempestSDR, [Main.java](JavaGUI/src/martin/tempest/gui/Main.java) includes added buttons that allow the user to select a trained model and run the [enhance_image.py](JavaGUI/enhance_image.py) script. The script performs inference on the captured image and saves the result (along with the original image).
 
-Návod k spusteniu TempestSDR sa nachádza nižšie.
+Instructions for running TempestSDR are provided below.
 
 TempestSDR
 =============
