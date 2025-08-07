@@ -1,4 +1,4 @@
-# Ukážka datasetu
-Tento podadresár obsahuje ukážku z vytvoreného datasetu.
+# Dataset Sample
+This subdirectory contains a sample from the created dataset.
 
-Každá referenčná snímka má svoj vlastný podadresár s rovnakým menom, v ktorom sa nachádzajú zachytené snímky.
+Each reference image has its own subdirectory with the same name, which contains the corresponding captured images.
