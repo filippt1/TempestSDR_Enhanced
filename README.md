@@ -1,16 +1,16 @@
-# Príloha k bakalárskej práci „Rekonštrukcia obrazu zachyteného v TempestSDR“
-V tomto repozitári sa nachádzajú použité skripty, ukážky datasetu a upravený TempestSDR.
+# Online resources to “Reconstruction of Images Captured by TempestSDR”
+This repository contains the used scripts, dataset samples, and the modified TempestSDR.
 
-## Štruktúra repozitára
-Repozitár obsahuje:
-- [zdrojový kód upraveného TempestSDR](TempestSDR_Enhanced/)
-- [zdojové kódy použitých skriptov pri tvorbe datasetu](dataset_scripts/)
-- [záznamy z trénovania, zdrojové kódy vyhodnocujúcich skriptov a dataloader](deep_learning/)
-- [ukážku z datasetu](dataset_sample/)
-- [ukážku inferencie s natrénovanými modelmi](inference_sample/)
-- [fotku a rozmery vytorenej antény a dipólov](antena/)
+## Repository Structure
+The repository includes:
+- [source code of the modified TempestSDR](TempestSDR_Enhanced/)
+- [source codes of scripts used for dataset creation](dataset_scripts/)
+- [training logs, source codes of evaluation scripts, and dataloader](deep_learning/)
+- [sample from the dataset](dataset_sample/)
+- [sample inference using trained models](inference_sample/)
+- [photo and dimensions of the created antenna and dipoles](antena/)
 
-## Ostatné súbory
-Kvôli obmedzenému úložisku sa celý dataset nachádza na stránke [Huggingface](https://huggingface.co/datasets/filippt1/TempestSDR_Enhanced_Dataset). Vytrénované modely sú uložené na [Google Drive](https://drive.google.com/drive/folders/1zFWvRVtZ-9s4WG3DEF2Kivu6meQ9UQvB?usp=sharing).
+## Other Files
+Due to limited storage, the full dataset is available on [Huggingface](https://huggingface.co/datasets/filippt1/TempestSDR_Enhanced_Dataset). The trained models are stored on [Google Drive](https://drive.google.com/drive/folders/1zFWvRVtZ-9s4WG3DEF2Kivu6meQ9UQvB?usp=sharing).
 
-Zdrojové kódy trénovacích skriptov pre DRUNet a DnCNN sa nachádzajú v repozitári ich autora [KAIR](https://github.com/cszn/KAIR).
+The source codes of the training scripts for DRUNet and DnCNN are in the original author’s repository [KAIR](https://github.com/cszn/KAIR).
